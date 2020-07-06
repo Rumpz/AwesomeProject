@@ -1,16 +1,24 @@
 /**
  * @format
  */
-
-import 'react-native';
 import React from 'react';
 import App from '../src/App';
-import {render} from '@testing-library/react';
+import {render, fireEvent} from 'react-native-testing-library';
 
-// Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
-
-it('renders correctly', () => {
-  const {queryAllByTestId} = render(<App />);
-  renderer.create(<App />);
+describe('Testing App entry with navigator', () => {
+  it('should return all the buttons to navigate', () => {
+    const buttons = [
+      'App',
+      'Hi there!',
+      'Go to Components Demo',
+      'Go to List Demo',
+      'Go to Counter Demo',
+      'Go to Image Demo',
+      'Go to Colour Demo',
+    ];
+    const {debug, findByText, getByText, queryByText} = render(<App />);
+    buttons.forEach(e => {
+      expect(queryByText(e)).not.toBeNull();
+    });
+  });
 });
