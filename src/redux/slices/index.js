@@ -1,3 +1,3 @@
-import counterSlice from './counterSlice/counterSlice';
+import CounterReducer from './counterSlice';
 
-export {counterSlice};
+export {CounterReducer};

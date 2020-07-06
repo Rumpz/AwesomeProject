@@ -2,8 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {View, Text, StyleSheet, Button} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {counterSlice} from '../redux/slices';
-const {increment, decrement} = counterSlice.actions;
+import {increment, decrement} from 'slices/counterSlice';
 
 const CounterScreen = () => {
   const dispatch = useDispatch();

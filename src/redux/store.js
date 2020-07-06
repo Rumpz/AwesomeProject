@@ -6,12 +6,12 @@ import {
   getDefaultMiddleware,
 } from '@reduxjs/toolkit';
 
-import {counterSlice} from './slices';
+import {CounterReducer} from 'slices';
 
 const DEV_ENV = process.env.NODE_ENV !== 'production';
 
 const rootReducer = combineReducers({
-  counter: counterSlice.reducer,
+  counter: CounterReducer,
 });
 
 const middleware = [...getDefaultMiddleware(), DEV_ENV && logger];
