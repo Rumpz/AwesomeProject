@@ -1,22 +1,21 @@
-import React, {useState} from 'react';
+import React from 'react';
+import {connect} from 'react-redux';
 import {View, Text, StyleSheet, Button} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import {counterSlice} from '../redux/slices';
+const {increment, decrement} = counterSlice.actions;
 
 const CounterScreen = () => {
-  const initialCounter = 0;
-  const [count, setCount] = useState(initialCounter);
-
-  const increaseCounter = () => setCount(prevCount => prevCount + 1);
-
-  const decreaseCounter = () =>
-    setCount(prevCount => (prevCount > 0 && prevCount - 1) || initialCounter);
+  const dispatch = useDispatch();
+  const counter = useSelector(state => state.counter);
 
   return (
     <View style={styles.container}>
       <Text>Counter</Text>
-      <Text>Current Count: {count} </Text>
+      <Text>Current Count: {counter} </Text>
       <View style={styles.buttons}>
-        <Button title="+" onPress={increaseCounter} />
-        <Button title="-" onPress={decreaseCounter} />
+        <Button title="+" onPress={() => dispatch(increment())} />
+        <Button title="-" onPress={() => dispatch(decrement())} />
       </View>
     </View>
   );
@@ -35,4 +34,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CounterScreen;
+const mapStateToProps = state => ({
+  ...state.counter,
+});
+
+const mapDispatchToProps = {
+  increment,
+  decrement,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CounterScreen);

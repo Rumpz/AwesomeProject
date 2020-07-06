@@ -1,20 +1,25 @@
 import logger from 'redux-logger';
+
 import {
   combineReducers,
-  createStore,
+  configureStore,
   getDefaultMiddleware,
 } from '@reduxjs/toolkit';
 
 import {counterSlice} from './slices';
 
-console.log(counterSlice);
+const DEV_ENV = process.env.NODE_ENV !== 'production';
+
 const rootReducer = combineReducers({
-  counter: counterSlice,
+  counter: counterSlice.reducer,
 });
 
-const store = createStore({
+const middleware = [...getDefaultMiddleware(), DEV_ENV && logger];
+
+const store = configureStore({
   reducer: rootReducer,
-  middleware: getDefaultMiddleware().concat(logger),
+  middleware,
+  devTools: DEV_ENV,
 });
 
 export default store;
