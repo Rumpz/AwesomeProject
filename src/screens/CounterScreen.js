@@ -1,6 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  useWindowDimensions,
+} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {increment, decrement} from 'slices/counterSlice';
 
@@ -33,16 +39,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = state => ({
-  ...state.counter,
-});
-
-const mapDispatchToProps = {
-  increment,
-  decrement,
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CounterScreen);
+export default CounterScreen;
