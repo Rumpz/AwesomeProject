@@ -3,10 +3,14 @@
  */
 import React from 'react';
 import App from '../src/App';
-import {render, fireEvent} from 'react-native-testing-library';
+import {render, fireEvent, cleanup} from 'react-native-testing-library';
+
+beforeEach(() => {
+  return ({queryByText} = render(<App />));
+});
 
 describe('Testing App entry with navigator', () => {
-  it('should return all the buttons to navigate', () => {
+  test('should return all the buttons to navigate', () => {
     const buttons = [
       'App',
       'Hi there!',
@@ -16,9 +20,17 @@ describe('Testing App entry with navigator', () => {
       'Go to Image Demo',
       'Go to Colour Demo',
     ];
-    const {debug, findByText, getByText, queryByText} = render(<App />);
-    buttons.forEach(e => {
-      expect(queryByText(e)).not.toBeNull();
-    });
+    buttons.forEach(text =>
+      expect(queryByText(text).props.children).toEqual(text),
+    );
+
+    expect(queryByText('not in any screen')).toBeNull();
+  });
+
+  test('should navigate to all the screens', () => {
+    const toClick = queryByText('Go to Components Demo');
+    fireEvent.press(toClick);
+    expect(queryByText('Getting started with React Native!')).not.toBeNull();
+    expect(queryByText('My name is Stephen')).not.toBeNull();
   });
 });
